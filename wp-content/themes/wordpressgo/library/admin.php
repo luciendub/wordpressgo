@@ -3,7 +3,6 @@
 Fonctions du côté admin
 */
 
-/************* DASHBOARD WIDGETS *****************/
 
 // disable default dashboard widgets
 function disable_default_dashboard_widgets() {
@@ -13,41 +12,22 @@ function disable_default_dashboard_widgets() {
 	unset($wp_meta_boxes['dashboard']['normal']['core']['dashboard_recent_comments']); // Comments Widget
 	unset($wp_meta_boxes['dashboard']['normal']['core']['dashboard_incoming_links']);  // Incoming Links Widget
 	unset($wp_meta_boxes['dashboard']['normal']['core']['dashboard_plugins']);         // Plugins Widget
-
-	// unset($wp_meta_boxes['dashboard']['side']['core']['dashboard_quick_press']);    // Quick Press Widget
+	unset($wp_meta_boxes['dashboard']['side']['core']['dashboard_quick_press']);    // Quick Press Widget
 	unset($wp_meta_boxes['dashboard']['side']['core']['dashboard_recent_drafts']);     // Recent Drafts Widget
 	unset($wp_meta_boxes['dashboard']['side']['core']['dashboard_primary']);           //
 	unset($wp_meta_boxes['dashboard']['side']['core']['dashboard_secondary']);         //
-
-	// remove plugin dashboard boxes
 	unset($wp_meta_boxes['dashboard']['normal']['core']['yoast_db_widget']);           // Yoast's SEO Plugin Widget
 	unset($wp_meta_boxes['dashboard']['normal']['core']['rg_forms_dashboard']);        // Gravity Forms Plugin Widget
 	unset($wp_meta_boxes['dashboard']['normal']['core']['bbp-dashboard-right-now']);   // bbPress Plugin Widget
 
-	/*
-	have more plugin widgets you'd like to remove?
-	share them with us so we can get a list of
-	the most commonly used. :D
-	https://github.com/eddiemachado/wordpressgo/issues
-	*/
 }
 
-/*
-Now let's talk about adding your own custom Dashboard widget.
-Sometimes you want to show clients feeds relative to their
-site's content. For example, the NBA.com feed for a sports
-site. Here is an example Dashboard Widget that displays recent
-entries from an RSS Feed.
-
-For more information on creating Dashboard Widgets, view:
-http://digwp.com/2010/10/customize-wordpress-dashboard/
-*/
 
 // RSS Dashboard Widget
 function wordpressgo_rss_dashboard_widget() {
 	if ( function_exists( 'fetch_feed' ) ) {
 		// include_once( ABSPATH . WPINC . '/feed.php' );               // include the required file
-		$feed = fetch_feed( 'http://feeds.feedburner.com/wpcandy' );        // specify the source feed
+		$feed = fetch_feed( 'http://feeds.feedburner.com/LePetitrudit' );        // specify the source feed
 		if (is_wp_error($feed)) {
 			$limit = 0;
 			$items = 0;
@@ -72,11 +52,7 @@ function wordpressgo_rss_dashboard_widget() {
 
 // calling all custom dashboard widgets
 function wordpressgo_custom_dashboard_widgets() {
-	wp_add_dashboard_widget( 'wordpressgo_rss_dashboard_widget', __( 'Recently on Themble (Customize on admin.php)', 'wordpressgotheme' ), 'wordpressgo_rss_dashboard_widget' );
-	/*
-	Be sure to drop any other created Dashboard Widgets
-	in this function and they will all load.
-	*/
+	wp_add_dashboard_widget( 'wordpressgo_rss_dashboard_widget', __( 'Recently on Themble', 'wordpressgotheme' ), 'wordpressgo_rss_dashboard_widget' );
 }
 
 
@@ -108,21 +84,27 @@ add_filter( 'login_headerurl', 'wordpressgo_login_url' );
 add_filter( 'login_headertitle', 'wordpressgo_login_title' );
 
 
-/************* CUSTOMIZE ADMIN *******************/
-
-/*
-I don't really recommend editing the admin too much
-as things may get funky if WordPress updates. Here
-are a few funtions which you can choose to use if
-you like.
-*/
-
 // Custom Backend Footer
 function wordpressgo_custom_admin_footer() {
-	_e( '<span id="footer-thankyou">Developed by <a href="http://yoursite.com" target="_blank">Your Site Name</a></span>. Built using <a href="http://themble.com/wordpressgo" target="_blank">wordpressgo</a>.', 'wordpressgotheme' );
+	_e( '<span id="footer-thankyou">Développé par <a href="" target="_blank">Votre site</a></span>. ', 'wordpressgotheme' );
 }
 
 // adding it to the admin area
 add_filter( 'admin_footer_text', 'wordpressgo_custom_admin_footer' );
+
+
+function disable_wp_emojicons() {
+
+  // Toutes les actions reliées aux Emoji (inutiles)
+  remove_action( 'admin_print_styles', 'print_emoji_styles' );
+  remove_action( 'wp_head', 'print_emoji_detection_script', 7 );
+  remove_action( 'admin_print_scripts', 'print_emoji_detection_script' );
+  remove_action( 'wp_print_styles', 'print_emoji_styles' );
+  remove_filter( 'wp_mail', 'wp_staticize_emoji_for_email' );
+  remove_filter( 'the_content_feed', 'wp_staticize_emoji' );
+  remove_filter( 'comment_text_rss', 'wp_staticize_emoji' );
+
+}
+add_action( 'init', 'disable_wp_emojicons' );
 
 ?>
