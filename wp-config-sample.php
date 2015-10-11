@@ -67,7 +67,7 @@ define('NONCE_SALT',       'put your unique phrase here');
  * si vous leur donnez chacune un préfixe unique. 
  * N'utilisez que des chiffres, des lettres non-accentuées, et des caractères soulignés!
  */
-$table_prefix  = 'wp_';
+$table_prefix  = 'votreprefix_';
 
 /** 
  * Pour les développeurs : le mode déboguage de WordPress.
@@ -84,6 +84,18 @@ $table_prefix  = 'wp_';
  * @link https://codex.wordpress.org/Debugging_in_WordPress 
  */ 
 define('WP_DEBUG', false); 
+
+// Nombre de révisions maximales
+define('WP_POST_REVISIONS', 3);
+
+// Mémoire Wordpress
+define('WP_MEMORY_LIMIT', '128M');
+
+// Désactiver l'édition de fichiers via l'administration
+define('DISALLOW_FILE_EDIT',true);
+
+// Forcer l'administration via SSL
+define('FORCE_SSL_ADMIN', true);
 
 /* C'est tout, ne touchez pas à ce qui suit ! Bon blogging ! */
 
