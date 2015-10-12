@@ -2,7 +2,7 @@
 
 Le kit de départ Wordpress.
 
-WordpressGo vise à créer un projet prêt-à-utiliser comprenant plusieurs fichiers et fonctions très utiles.
+WordpressGo vise à créer un projet "prêt-à-utiliser" comprenant plusieurs fichiers et fonctions très utiles.
 
 ## Dans ce projet:
 
@@ -17,10 +17,10 @@ WordpressGo vise à créer un projet prêt-à-utiliser comprenant plusieurs fich
 
 ## Utilisation
 Pour démarrer rapidement votre nouveau site Wordpress:
-1. Téléversez le tout sur le serveur
-2. Installez Wordpress
-3. Veillez à modifier le fichier .htaccess selon vos besoins
-4. Activez les extensions
+*1*. Téléversez le tout sur le serveur
+*2*. Installez Wordpress
+*3*. Veillez à modifier le fichier .htaccess selon vos besoins
+*4*. Activez les extensions
 
 
 ### Crédits
