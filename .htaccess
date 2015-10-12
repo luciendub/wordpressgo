@@ -1,24 +1,24 @@
 # Protège le dossier wp-includes
 # http://codex.wordpress.org/Hardening_WordPress#Securing_wp-includes
 <IfModule mod_rewrite.c>
-RewriteEngine On
-RewriteBase /
-RewriteRule ^wp-admin/includes/ - [F,L]
-RewriteRule !^wp-includes/ - [S=3]
-RewriteRule ^wp-includes/[^/]+\.php$ - [F,L]
-RewriteRule ^wp-includes/js/tinymce/langs/.+\.php - [F,L]
-RewriteRule ^wp-includes/theme-compat/ - [F,L]
+  RewriteEngine On
+  RewriteBase /
+  RewriteRule ^wp-admin/includes/ - [F,L]
+  RewriteRule !^wp-includes/ - [S=3]
+  RewriteRule ^wp-includes/[^/]+\.php$ - [F,L]
+  RewriteRule ^wp-includes/js/tinymce/langs/.+\.php - [F,L]
+  RewriteRule ^wp-includes/theme-compat/ - [F,L]
 </IfModule>
 
+# Protège le fichier wp-config.php
+<files wp-config.php>
+  order allow,deny
+  deny from all
+</files>
 
-# Apache Server Configs v2.14.0 | MIT License
 
 
-# ----------------------------------------------------------------------
-# | Cross-origin requests                                              |
-# ----------------------------------------------------------------------
-
-# Allow cross-origin requests.
+# Autorise les requêtes "cross-origin"
 #
 # https://developer.mozilla.org/en-US/docs/Web/HTTP/Access_control_CORS
 # http://enable-cors.org/
@@ -116,12 +116,6 @@ Options -MultiViews
 # available in the various cases when it may not.
 #
 # https://hsivonen.fi/doctype/#ie8
-#
-# (!) Starting with Internet Explorer 11, document modes are deprecated.
-# If your business still relies on older web apps and services that were
-# designed for older versions of Internet Explorer, you might want to
-# consider enabling `Enterprise Mode` throughout your company.
-#
 # https://msdn.microsoft.com/en-us/library/ie/bg182625.aspx#docmode
 # http://blogs.msdn.com/b/ie/archive/2014/04/02/stay-up-to-date-with-enterprise-mode-for-internet-explorer-11.aspx
 
