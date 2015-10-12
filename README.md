@@ -1,5 +1,7 @@
 # WordpressGo
 
+![Screenshot](https://raw.github.com/luciendub/wordpressgo/master/wp-content/themes/wordpressgo/screenshot.png)
+
 Le kit de départ Wordpress.
 
 WordpressGo vise à créer un projet "prêt-à-utiliser" comprenant plusieurs fichiers et fonctions très utiles.
