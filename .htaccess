@@ -1,15 +1,18 @@
+# Protège le dossier wp-includes
+# http://codex.wordpress.org/Hardening_WordPress#Securing_wp-includes
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /
+RewriteRule ^wp-admin/includes/ - [F,L]
+RewriteRule !^wp-includes/ - [S=3]
+RewriteRule ^wp-includes/[^/]+\.php$ - [F,L]
+RewriteRule ^wp-includes/js/tinymce/langs/.+\.php - [F,L]
+RewriteRule ^wp-includes/theme-compat/ - [F,L]
+</IfModule>
+
+
 # Apache Server Configs v2.14.0 | MIT License
-# https://github.com/h5bp/server-configs-apache
 
-# (!) Using `.htaccess` files slows down Apache, therefore, if you have
-# access to the main server configuration file (which is usually called
-# `httpd.conf`), you should add this logic there.
-#
-# https://httpd.apache.org/docs/current/howto/htaccess.html.
-
-# ######################################################################
-# # CROSS-ORIGIN                                                       #
-# ######################################################################
 
 # ----------------------------------------------------------------------
 # | Cross-origin requests                                              |
@@ -136,27 +139,10 @@ Options -MultiViews
 
 </IfModule>
 
-# ----------------------------------------------------------------------
-# | Iframes cookies                                                    |
-# ----------------------------------------------------------------------
-
-# Allow cookies to be set from iframes in Internet Explorer.
-#
-# https://msdn.microsoft.com/en-us/library/ms537343.aspx
-# http://www.w3.org/TR/2000/CR-P3P-20001215/
-
-# <IfModule mod_headers.c>
-#     Header set P3P "policyref=\"/w3c/p3p.xml\", CP=\"IDC DSP COR ADM DEVi TAIi PSA PSD IVAi IVDi CONi HIS OUR IND CNT\""
-# </IfModule>
-
 
 # ######################################################################
 # # MEDIA TYPES AND CHARACTER ENCODINGS                                #
 # ######################################################################
-
-# ----------------------------------------------------------------------
-# | Media types                                                        |
-# ----------------------------------------------------------------------
 
 # Serve resources with the proper media types (f.k.a. MIME types).
 #
@@ -165,33 +151,16 @@ Options -MultiViews
 
 <IfModule mod_mime.c>
 
-  # Data interchange
-
     AddType application/atom+xml                        atom
     AddType application/json                            json map topojson
     AddType application/ld+json                         jsonld
     AddType application/rss+xml                         rss
     AddType application/vnd.geo+json                    geojson
     AddType application/xml                             rdf xml
-
-
-  # JavaScript
-
-    # Normalize to standard type.
-    # https://tools.ietf.org/html/rfc4329#section-7.2
-
     AddType application/javascript                      js
-
-
-  # Manifest files
-
     AddType application/manifest+json                   webmanifest
     AddType application/x-web-app-manifest+json         webapp
     AddType text/cache-manifest                         appcache
-
-
-  # Media files
-
     AddType audio/mp4                                   f4a f4b m4a
     AddType audio/ogg                                   oga ogg opus
     AddType image/bmp                                   bmp
@@ -201,34 +170,12 @@ Options -MultiViews
     AddType video/ogg                                   ogv
     AddType video/webm                                  webm
     AddType video/x-flv                                 flv
-
-    # Serving `.ico` image files with a different media type
-    # prevents Internet Explorer from displaying then as images:
-    # https://github.com/h5bp/html5-boilerplate/commit/37b5fec090d00f38de64b591bcddcb205aadf8ee
-
     AddType image/x-icon                                cur ico
-
-
-  # Web fonts
-
     AddType application/font-woff                       woff
     AddType application/font-woff2                      woff2
     AddType application/vnd.ms-fontobject               eot
-
-    # Browsers usually ignore the font media types and simply sniff
-    # the bytes to figure out the font type.
-    # https://mimesniff.spec.whatwg.org/#matching-a-font-type-pattern
-    #
-    # However, Blink and WebKit based browsers will show a warning
-    # in the console if the following font types are served with any
-    # other media types.
-
     AddType application/x-font-ttf                      ttc ttf
     AddType font/opentype                               otf
-
-
-  # Other
-
     AddType application/octet-stream                    safariextz
     AddType application/x-bb-appworld                   bbaw
     AddType application/x-chrome-extension              crx
@@ -489,15 +436,10 @@ AddDefaultCharset utf-8
 # </IfModule>
 
 # ----------------------------------------------------------------------
-# | File access                                                        |
+# | Protections                                                        |
 # ----------------------------------------------------------------------
 
-# Block access to directories without a default document.
-#
-# You should leave the following uncommented, as you shouldn't allow
-# anyone to surf through every directory on your server (which may
-# includes rather private places such as the CMS's directories).
-
+# Bloque l'accès aux dossiers sans index
 <IfModule mod_autoindex.c>
     Options -Indexes
 </IfModule>
@@ -510,11 +452,6 @@ AddDefaultCharset utf-8
 # These types of files usually contain user preferences or the preserved
 # state of an utility, and can include rather private places like, for
 # example, the `.git` or `.svn` directories.
-#
-# The `/.well-known/` directory represents the standard (RFC 5785) path
-# prefix for "well-known locations" (e.g.: `/.well-known/manifest.json`,
-# `/.well-known/keybase.txt`), and therefore, access to its visible
-# content should not be blocked.
 #
 # https://www.mnot.net/blog/2010/04/07/well-known
 # https://tools.ietf.org/html/rfc5785
@@ -662,10 +599,6 @@ AddDefaultCharset utf-8
 
 # Remove the `X-Powered-By` response header that:
 #
-#  * is set by some frameworks and server-side languages
-#    (e.g.: ASP.NET, PHP), and its value contains information
-#    about them (e.g.: their name, version number)
-#
 #  * doesn't provide any value as far as users are concern,
 #    and in some cases, the information provided by it can
 #    be used by attackers
@@ -692,18 +625,6 @@ AddDefaultCharset utf-8
 
 ServerSignature Off
 
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-# Prevent Apache from sending in the `Server` response header its
-# exact version number, the description of the generic OS-type or
-# information about its compiled-in modules.
-#
-# (!) The `ServerTokens` directive will only work in the main server
-# configuration file, so don't try to enable it in the `.htaccess` file!
-#
-# https://httpd.apache.org/docs/current/mod/core.html#servertokens
-
-#ServerTokens Prod
 
 
 # ######################################################################
