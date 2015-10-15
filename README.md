@@ -37,6 +37,10 @@ Pour démarrer rapidement votre nouveau site Wordpress:
  
 ### Changelog
 *15 oct 2015*
+ * Ajout d'un fichier .htaccess pour protéger le dossier wp-includes
+ * Ajout d'un fichier .htaccess pour protéger le dossier wp-content/uploads
+
+*15 oct 2015*
  * Suppression du editor-style
  * Correction du chargement de l'extension TGM
  * Ajout de l'Extension WP maintenance Mode
