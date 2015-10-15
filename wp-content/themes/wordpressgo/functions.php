@@ -6,7 +6,7 @@ URL: http://themble.com/wordpressgo/
 */
 
 // TGM Plugin Activation
-require_once('library/class-tgm-plugin-activation.php');
+require_once('inc/class-tgm-plugin-activation.php');
 require_once('library/plugins.php');
 
 // Chargement de wordpressgo
@@ -15,14 +15,11 @@ require_once( 'library/admin.php' );
 
 function wordpressgo_ahoy() {
 
-  //Allow editor style.
-  add_editor_style( get_stylesheet_directory_uri() . '/library/css/editor-style.css' );
-
-  // let's get language support going, if you need it
+  // Support des langues pour le thème
   load_theme_textdomain( 'wordpressgotheme', get_template_directory() . '/library/translation' );
 
-  // USE THIS TEMPLATE TO CREATE CUSTOM POST TYPES EASILY
-  require_once( 'library/custom-post-type.php' );
+  // Création d'un custom Post Type (enlever le commentaire pour utiliser)
+  // require_once( 'library/custom-post-type.php' );
 
   // launching operation cleanup
   add_action( 'init', 'wordpressgo_head_cleanup' );
@@ -66,29 +63,9 @@ if ( ! isset( $content_width ) ) {
 
 /************* THUMBNAIL SIZE OPTIONS *************/
 
-// Thumbnail sizes
+// Taille des miniatures
 add_image_size( 'wordpressgo-thumb-600', 600, 150, true );
 add_image_size( 'wordpressgo-thumb-300', 300, 100, true );
-
-/*
-to add more sizes, simply copy a line from above
-and change the dimensions & name. As long as you
-upload a "featured image" as large as the biggest
-set width or height, all the other sizes will be
-auto-cropped.
-
-To call a different size, simply change the text
-inside the thumbnail function.
-
-For example, to call the 300 x 100 sized image,
-we would use the function:
-<?php the_post_thumbnail( 'wordpressgo-thumb-300' ); ?>
-for the 600 x 150 image:
-<?php the_post_thumbnail( 'wordpressgo-thumb-600' ); ?>
-
-You can change the names and dimensions to whatever
-you like. Enjoy!
-*/
 
 add_filter( 'image_size_names_choose', 'wordpressgo_custom_image_sizes' );
 
@@ -99,54 +76,9 @@ function wordpressgo_custom_image_sizes( $sizes ) {
     ) );
 }
 
-/*
-The function above adds the ability to use the dropdown menu to select
-the new images sizes you have just created from within the media manager
-when you add media to your content blocks. If you add more image sizes,
-duplicate one of the lines in the array and name it according to your
-new image size.
-*/
 
-/************* THEME CUSTOMIZE *********************/
 
-/* 
-  A good tutorial for creating your own Sections, Controls and Settings:
-  http://code.tutsplus.com/series/a-guide-to-the-wordpress-theme-customizer--wp-33722
-  
-  Good articles on modifying the default options:
-  http://natko.com/changing-default-wordpress-theme-customization-api-sections/
-  http://code.tutsplus.com/tutorials/digging-into-the-theme-customizer-components--wp-27162
-  
-  To do:
-  - Create a js for the postmessage transport method
-  - Create some sanitize functions to sanitize inputs
-  - Create some boilerplate Sections, Controls and Settings
-*/
-
-function wordpressgo_theme_customizer($wp_customize) {
-  // $wp_customize calls go here.
-  //
-  // Uncomment the below lines to remove the default customize sections 
-
-  // $wp_customize->remove_section('title_tagline');
-  // $wp_customize->remove_section('colors');
-  // $wp_customize->remove_section('background_image');
-  // $wp_customize->remove_section('static_front_page');
-  // $wp_customize->remove_section('nav');
-
-  // Uncomment the below lines to remove the default controls
-  // $wp_customize->remove_control('blogdescription');
-  
-  // Uncomment the following to change the default section titles
-  // $wp_customize->get_section('colors')->title = __( 'Theme Colors' );
-  // $wp_customize->get_section('background_image')->title = __( 'Images' );
-}
-
-add_action( 'customize_register', 'wordpressgo_theme_customizer' );
-
-/************* ACTIVE SIDEBARS ********************/
-
-// Sidebars & Widgetizes Areas
+// Sidebars
 function wordpressgo_register_sidebars() {
 	register_sidebar(array(
 		'id' => 'sidebar1',
@@ -158,36 +90,10 @@ function wordpressgo_register_sidebars() {
 		'after_title' => '</h4>',
 	));
 
-	/*
-	to add more sidebars or widgetized areas, just copy
-	and edit the above sidebar code. In order to call
-	your new sidebar just use the following code:
-
-	Just change the name to whatever your new
-	sidebar's id is, for example:
-
-	register_sidebar(array(
-		'id' => 'sidebar2',
-		'name' => __( 'Sidebar 2', 'wordpressgotheme' ),
-		'description' => __( 'The second (secondary) sidebar.', 'wordpressgotheme' ),
-		'before_widget' => '<div id="%1$s" class="widget %2$s">',
-		'after_widget' => '</div>',
-		'before_title' => '<h4 class="widgettitle">',
-		'after_title' => '</h4>',
-	));
-
-	To call the sidebar in your template, you can just copy
-	the sidebar.php file and rename it to your sidebar's name.
-	So using the above example, it would be:
-	sidebar-sidebar2.php
-
-	*/
-} // don't remove this bracket!
+}
 
 
-/************* COMMENT LAYOUT *********************/
-
-// Comment Layout
+// Template pour les commentaires
 function wordpressgo_comments( $comment, $args, $depth ) {
    $GLOBALS['comment'] = $comment; ?>
   <div id="comment-<?php comment_ID(); ?>" <?php comment_class('cf'); ?>>
@@ -225,13 +131,7 @@ function wordpressgo_comments( $comment, $args, $depth ) {
 } // don't remove this bracket!
 
 
-/*
-This is a modification of a function found in the
-twentythirteen theme where we can declare some
-external fonts. If you're using Google Fonts, you
-can replace these fonts, change it in your scss files
-and be up and running in seconds.
-*/
+// Google Fonts
 function wordpressgo_fonts() {
   wp_enqueue_style('googleFonts', 'http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic');
 }

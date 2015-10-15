@@ -2,13 +2,13 @@
 
 
 function wordpressgo_head_cleanup() {
-	// category feeds
-	// remove_action( 'wp_head', 'feed_links_extra', 3 );
-	// post and comment feeds
-	// remove_action( 'wp_head', 'feed_links', 2 );
+	// Flux des catégories
+	remove_action( 'wp_head', 'feed_links_extra', 3 );
+	// Flux des articles et des commentaires
+	remove_action( 'wp_head', 'feed_links', 2 );
 	// EditURI link
+	// Windows live writer
 	remove_action( 'wp_head', 'rsd_link' );
-	// windows live writer
 	remove_action( 'wp_head', 'wlwmanifest_link' );
 	// previous link
 	remove_action( 'wp_head', 'parent_post_rel_link', 10, 0 );
@@ -88,10 +88,9 @@ function wordpressgo_gallery_style($css) {
 
 
 /*********************
-SCRIPTS & ENQUEUEING
+SCRIPTS & CSS
 *********************/
 
-// loading modernizr and jquery, and reply script
 function wordpressgo_scripts_and_styles() {
 
   global $wp_styles; // call global $wp_styles variable to add conditional wrapper around ie stylesheet the WordPress way
@@ -101,32 +100,27 @@ function wordpressgo_scripts_and_styles() {
 		// modernizr (without media query polyfill)
 		wp_register_script( 'wordpressgo-modernizr', get_stylesheet_directory_uri() . '/library/js/libs/modernizr.custom.min.js', array(), '2.5.3', false );
 
-		// register main stylesheet
-		wp_register_style( 'wordpressgo-stylesheet', get_stylesheet_directory_uri() . '/library/css/style.css', array(), '', 'all' );
+		wp_register_script( 'respondjs', get_stylesheet_directory_uri() . '/library/js/respond.js', '', '', false );
+		wp_enqueue_script( 'respondjs' );
+		wp_script_add_data( 'respondjs', 'conditional', 'lt IE 9' );
 
-		// ie-only style sheet
-		wp_register_style( 'wordpressgo-ie-only', get_stylesheet_directory_uri() . '/library/css/ie.css', array(), '' );
+		// Feuilles de style principales
+		wp_register_style( 'bootstrapcdn', '//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css', array(), '', 'all' );
+		wp_register_style( 'custom', get_stylesheet_directory_uri() . '/library/css/custom.css', array(), '', 'all' );
 
-    // comment reply script for threaded comments
-    if ( is_singular() AND comments_open() AND (get_option('thread_comments') == 1)) {
-		  wp_enqueue_script( 'comment-reply' );
-    }
+
+	    // comment reply script for threaded comments
+	    if ( is_singular() AND comments_open() AND (get_option('thread_comments') == 1)) {
+			  wp_enqueue_script( 'comment-reply' );
+	    }
 
 		//adding scripts file in the footer
 		wp_register_script( 'wordpressgo-js', get_stylesheet_directory_uri() . '/library/js/scripts.js', array( 'jquery' ), '', true );
 
 		// enqueue styles and scripts
 		wp_enqueue_script( 'wordpressgo-modernizr' );
-		wp_enqueue_style( 'wordpressgo-stylesheet' );
-		wp_enqueue_style( 'wordpressgo-ie-only' );
-
-		$wp_styles->add_data( 'wordpressgo-ie-only', 'conditional', 'lt IE 9' ); // add conditional wrapper around ie stylesheet
-
-		/*
-		I recommend using a plugin to call jQuery
-		using the google cdn. That way it stays cached
-		and your site will load faster.
-		*/
+		wp_enqueue_style( 'bootstrapcdn' );
+		wp_enqueue_style( 'custom' );
 		wp_enqueue_script( 'jquery' );
 		wp_enqueue_script( 'wordpressgo-js' );
 
@@ -136,8 +130,6 @@ function wordpressgo_scripts_and_styles() {
 /*********************
 THEME SUPPORT
 *********************/
-
-// Adding WP 3+ Functions & Theme Support
 function wordpressgo_theme_support() {
 
 	// wp thumbnails (sizes handled in functions.php)
@@ -146,38 +138,27 @@ function wordpressgo_theme_support() {
 	// default thumb size
 	set_post_thumbnail_size(125, 125, true);
 
-	// wp custom background (thx to @bransonwerner for update)
-	add_theme_support( 'custom-background',
-	    array(
-	    'default-image' => '',    // background image default
-	    'default-color' => '',    // background color default (dont add the #)
-	    'wp-head-callback' => '_custom_background_cb',
-	    'admin-head-callback' => '',
-	    'admin-preview-callback' => ''
-	    )
-	);
-
 	// rss thingy
 	add_theme_support('automatic-feed-links');
 
 	// to add header image support go here: http://themble.com/support/adding-header-background-image-support/
 
-	// adding post format support
+	// Ajout des formats d'articles
 	add_theme_support( 'post-formats',
 		array(
-			'aside',             // title less blurb
-			'gallery',           // gallery of images
-			'link',              // quick link to other site
-			'image',             // an image
-			'quote',             // a quick quote
-			'status',            // a Facebook like status update
-			'video',             // video
-			'audio',             // audio
-			'chat'               // chat transcript
+			'aside',
+			'gallery',
+			'link',
+			'image',
+			'quote',
+			'status',
+			'video',             
+			'audio',             
+			'chat'
 		)
 	);
 
-	// wp menus
+	// Les menus
 	add_theme_support( 'menus' );
 
 	// registering wp3+ menus
@@ -195,14 +176,12 @@ function wordpressgo_theme_support() {
 		'comment-form'
 	) );
 
-} /* end wordpressgo theme support */
+}
 
 
-/*********************
-RELATED POSTS FUNCTION
-*********************/
 
-// Related Posts Function (call using wordpressgo_related_posts(); )
+// Fonction pour les articles en lien
+// Utiliser avec wordpressgo_related_posts();
 function wordpressgo_related_posts() {
 	echo '<ul id="wordpressgo-related-posts">';
 	global $post;
@@ -227,7 +206,7 @@ function wordpressgo_related_posts() {
 	}
 	wp_reset_postdata();
 	echo '</ul>';
-} /* end wordpressgo related posts function */
+}
 
 /*********************
 PAGE NAVI

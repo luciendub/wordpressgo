@@ -31,6 +31,11 @@ function wordpressgo_register_required_plugins() {
 			'slug'        => 'cmb2',
 			'required'    => false,
 		),
+		array(
+			'name'        => 'Wordpress Maintenance Mode',
+			'slug'        => 'wp-maintenance-mode',
+			'required'    => false,
+		),
 
 	);
 

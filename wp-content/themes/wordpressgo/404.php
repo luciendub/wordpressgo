@@ -1,43 +1,35 @@
 <?php get_header(); ?>
 
-			<div id="content">
+<div class="container">
 
-				<div id="inner-content" class="wrap cf">
+	<div class="row">
 
-					<main id="main" class="m-all t-2of3 d-5of7 cf" role="main" itemscope itemprop="mainContentOfPage" itemtype="http://schema.org/Blog">
+		<main id="main" class="col-md-12" role="main" itemscope itemprop="mainContentOfPage" itemtype="http://schema.org/Blog">
 
-						<article id="post-not-found" class="hentry cf">
+			<article id="post-not-found" class="hentry cf">
 
-							<header class="article-header">
+				<header class="article-header">
 
-								<h1><?php _e( 'Epic 404 - Article Not Found', 'wordpressgotheme' ); ?></h1>
+					<h1><?php _e( 'Epic 404 - Article Not Found', 'wordpressgotheme' ); ?></h1>
 
-							</header>
+				</header>
 
-							<section class="entry-content">
+				<section class="entry-content">
 
-								<p><?php _e( 'The article you were looking for was not found, but maybe try looking again!', 'wordpressgotheme' ); ?></p>
+					<p><?php _e( 'The article you were looking for was not found, but maybe try looking again!', 'wordpressgotheme' ); ?></p>
 
-							</section>
+				</section>
 
-							<section class="search">
+				<section class="search">
 
-									<p><?php get_search_form(); ?></p>
+						<p><?php get_search_form(); ?></p>
 
-							</section>
+				</section>
 
-							<footer class="article-footer">
+			</article>
 
-									<p><?php _e( 'This is the 404.php template.', 'wordpressgotheme' ); ?></p>
-
-							</footer>
-
-						</article>
-
-					</main>
-
-				</div>
-
-			</div>
+		</main>
+	</div>
+</div>
 
 <?php get_footer(); ?>
