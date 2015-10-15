@@ -37,11 +37,11 @@ Pour démarrer rapidement votre nouveau site Wordpress:
  
 ### Changelog
 *15 oct 2015*
-  Suppression du editor-style
-  Correction du chargement de l'extension TGM
-  Ajout de l'Extension WP maintenance Mode
-  Modification de quelques commentaires pour wordpressgo/functions.php
-  Ajout de boostrap comme style apr défaut
-  Ajout de la feuille custom.css
-  Épuration de header.php
-  Ajout de respond.js pour lt IE9
+ * Suppression du editor-style
+ * Correction du chargement de l'extension TGM
+ * Ajout de l'Extension WP maintenance Mode
+ * Modification de quelques commentaires pour wordpressgo/functions.php
+ * Ajout de boostrap comme style apr défaut
+ * Ajout de la feuille custom.css
+ * Épuration de header.php
+ * Ajout de respond.js pour lt IE9
