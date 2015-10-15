@@ -37,6 +37,9 @@ Pour démarrer rapidement votre nouveau site Wordpress:
  
 ### Changelog
 *15 oct 2015*
+ * Suppression des commentaires HTML laissé par YOAST
+
+*15 oct 2015*
  * Ajout d'un fichier .htaccess pour protéger le dossier wp-includes
  * Ajout d'un fichier .htaccess pour protéger le dossier wp-content/uploads
 
