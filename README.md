@@ -33,3 +33,15 @@ Pour démarrer rapidement votre nouveau site Wordpress:
  * [CMB2](https://github.com/WebDevStudios/CMB2) pour la création de champs personnalisés
  * [HTML5 Boiletplate](https://github.com/h5bp/html5-boilerplate) pour le fichier .htaccess
  * [Freepik](http://www.freepik.com/) pour l'image screenshot.png
+ * 
+ 
+### Changelog
+*15 oct 2015*
+  Suppression du editor-style
+  Correction du chargement de l'extension TGM
+  Ajout de l'Extension WP maintenance Mode
+  Modification de quelques commentaires pour wordpressgo/functions.php
+  Ajout de boostrap comme style apr défaut
+  Ajout de la feuille custom.css
+  Épuration de header.php
+  Ajout de respond.js pour lt IE9
